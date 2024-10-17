@@ -1,6 +1,6 @@
 ---
 title: "Lab7"
-author: "Your Name"
+author: "Leo Lu"
 date: "2024-10-17"
 output: "github_document"
 ---
@@ -13,9 +13,9 @@ library(ggstatsplot)
 library(performance)
 library(sjPlot)
 
-ex <- read_sav("C:/Users/Colin/Documents/GitHub/Website/Lab7/ex.sav")
+ex <- read_sav("/Users/leolu/Documents/GitHub/Lab7/ex.sav")
 
-lab7<-read.csv("C:/Users/Colin/Documents/GitHub/Website/Lab7/lab7.csv")
+lab7<-read.csv("/Users/leolu/Documents/GitHub/Lab7/lab7.csv")
 
 
 
@@ -50,7 +50,7 @@ ggplot(ex, aes(x = Conscientiousness, y = GPA)) + geom_point() + geom_smooth(met
 ```{r}
 #step 1: build a model
 model<-lm(GPA ~ Conscientiousness + AverageHoursofSleep, data = ex)
-
+#GPA preicted by conscientiousness + averageHoursofSleep
 
 #step 2: check the assumptions
 check_model(model)
@@ -72,13 +72,47 @@ plot_model(model,  type ="est",  show.values = TRUE, vline.color = "#1B191999", 
 # Q1: Use the Corr or the ggcorrmat function to plot the correlation between all variables. Which personality traits are correlated with satisfaction with life and which one is not? 
 ```{r}
 
+Corr(lab7)
+
+ggcorrmat(lab7)
+
+ggplot(lab7, aes(x = Extraversion, Agreeableness, Conscientiousness, EmotionalStability, Openness, y = SWL)) + geom_point() + geom_smooth() + theme_bruce()
+
+ggplot(lab7, aes(x = Extraversion, Agreeableness, Conscientiousness, EmotionalStability, Openness, y = SWL)) + geom_point() + geom_smooth(method = lm) + theme_bruce()
+
+#All variables except openness are correlated with satisfaction wth life.
+
 ```
 
 # Q2: Run a multiple regression using the Big 5 personality traits to predict satisfaction with life and plot the results
 ```{r}
 #for this lab assignment you would assume assumptions are met, but for your own analysis, you will need to examine assumptions carefully
 
+model<-lm(SWL ~ Extraversion + Agreeableness + Conscientiousness + EmotionalStability + Openness, data = lab7)
+
+check_model(model)
+
+model_summary(model)
+
+tab_model(model)
+
+plot_model(model,  type ="est",  show.values = TRUE, vline.color = "#1B191999", line.size = 1.5, dot.size = 2.5, colors = "blue") + theme_bruce()
+
 
 ```
 
 # Q3: Interpret the intercept, the meaning of each of the unstandardized coefficient (e.g., one unit increase in A is associated with x point increase in B), and the R2. Which personality trait(s) can explain unique variance in satisfaction with life when controlling for each other, and which ones cannot? If someone asks you for advice on how to improve life satisfaction, based on your results, which personality trait would you recommend them to change and why? 
+
+The intercept is 2.191. 
+
+One unit increase in Extraversion is associated with a 0.14 increase in Satisfaction With Life. 
+One unit increase in Agreeableness is associated with a 0.062 increase in Satisfaction With life. 
+One unit increase in Conscientiousness is associated with a 0.019 increase in Satisfaction With Life. 
+One unit increase in Emotional Stability is associated with a 0.134 increase in Satisfaction With Life.
+One unit increase in Openness is associated with a -0.101 decrease in Satisfaction With Life.
+
+As for r^2, 13.8% of the variability is explained by the whole model.
+
+Extraversion, Emotional Stability, and Openness are able to explain unique variances while Agreeableness and conscientiousness are not.
+
+If someone asks me which personality traits I would advise on improving life satisfaction. I would highly recommend Extraversion as it causes the largest increase in Life satisfaction. Then I will recommend Emotional Stability as it is the only other trait that positively predicts Life satisfaction. I would not mention Agreeableness and Conscientiousness as they have no significant impact on life satisfaction. I would definitely not recommend Openness as positively increasing Openness lowers Life satisfaction.
