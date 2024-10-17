@@ -57,11 +57,7 @@ library(ggstatsplot)
 ``` r
 library(performance)
 library(sjPlot)
-```
 
-    ## Install package "strengejacke" from GitHub (`devtools::install_github("strengejacke/strengejacke")`) to load all sj-packages at once!
-
-``` r
 ex <- read_sav("/Users/leolu/Documents/GitHub/Lab7/ex.sav")
 
 lab7<-read.csv("/Users/leolu/Documents/GitHub/Lab7/lab7.csv")
@@ -553,7 +549,7 @@ plot_model(model,  type ="est",  show.values = TRUE, vline.color = "#1B191999", 
 
 # Q3: Interpret the intercept, the meaning of each of the unstandardized coefficient (e.g., one unit increase in A is associated with x point increase in B), and the R2. Which personality trait(s) can explain unique variance in satisfaction with life when controlling for each other, and which ones cannot? If someone asks you for advice on how to improve life satisfaction, based on your results, which personality trait would you recommend them to change and why?
 
-The intercept is 2.191.
+The intercept is 2.191. When all traits are 0, the SWL is 2.191
 
 One unit increase in Extraversion is associated with a 0.14 increase in
 Satisfaction With Life. One unit increase in Agreeableness is associated
